@@ -59,142 +59,65 @@ const FallbackHandler = {
 };
 
 
-const InProgressHabeIchCoronaIntent = {
+const StartedInProgressHabeIchCoronaHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === "IntentRequest"
+      && handlerInput.requestEnvelope.request.intent.name === "HabeIchCoronaIntent"
+      && handlerInput.requestEnvelope.request.dialogState !== 'COMPLETED';
+  },
+  handle(handlerInput) {
+    return handlerInput.responseBuilder
+      .addDelegateDirective()
+      .getResponse();
+  }
+}
+
+const HabeIchCoronaHandlerDirektKontaktHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === "IntentRequest"
+      && handlerInput.requestEnvelope.request.intent.name === "HabeIchCoronaIntent"
+      && handlerInput.requestEnvelope.request.intent.slots.kontakt.value
+      && handlerInput.requestEnvelope.request.intent.slots.kontakt.value === 'ja'
+      && !handlerInput.requestEnvelope.request.intent.slots.direkt.value
+  },
+  handle(handlerInput) {
+    return handlerInput.responseBuilder
+    .speak('Haben sie sich vor den ersten symptomen in ihrer nähe befunden?')
+    .reprompt('Haben sie sich vor den ersten symptomen in ihrer nähe befunden?')
+    .addElicitSlotDirective('direkt')
+    .getResponse();
+  }
+}
+
+const HabeIchCoronaHandlerDritteKontaktHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === "IntentRequest"
+      && handlerInput.requestEnvelope.request.intent.name === "HabeIchCoronaIntent"
+      && handlerInput.requestEnvelope.request.intent.slots.kontakt.value
+      && handlerInput.requestEnvelope.request.intent.slots.kontakt.value === 'nein'
+      && !handlerInput.requestEnvelope.request.intent.slots.direkt.value
+  },
+  handle(handlerInput) {
+    return handlerInput.responseBuilder
+    .speak('Eine Person die sie kennen hatte Kontakt?')
+    .reprompt('Eine Person die sie kennen hatte Kontakt?')
+    .addElicitSlotDirective('dritte')
+    .getResponse();
+  }
+}
+
+
+const CompletedHabeIchCoronaIntent = {
   canHandle(handlerInput) {
     const request = handlerInput.requestEnvelope.request;
 
     return request.type === 'IntentRequest'
       && request.intent.name === 'HabeIchCoronaIntent'
-      && request.dialogState !== 'COMPLETED';
-  },
-  handle(handlerInput) {
-    const currentIntent = handlerInput.requestEnvelope.request.intent;
-    let prompt = '';
-
-    for (const slotName of Object.keys(handlerInput.requestEnvelope.request.intent.slots)) {
-      const currentSlot = currentIntent.slots[slotName];
-      if (currentSlot.confirmationStatus !== 'CONFIRMED'
-                && currentSlot.resolutions
-                && currentSlot.resolutions.resolutionsPerAuthority[0]) {
-        if (currentSlot.resolutions.resolutionsPerAuthority[0].status.code === 'ER_SUCCESS_MATCH') {
-          if (currentSlot.resolutions.resolutionsPerAuthority[0].values.length > 1) {
-            prompt = 'Which would you like';
-            const size = currentSlot.resolutions.resolutionsPerAuthority[0].values.length;
-
-            currentSlot.resolutions.resolutionsPerAuthority[0].values
-              .forEach((element, index) => {
-                prompt += ` ${(index === size - 1) ? ' or' : ' '} ${element.value.name}`;
-              });
-
-            prompt += '?';
-
-            return handlerInput.responseBuilder
-              .speak(prompt)
-              .reprompt(prompt)
-              .addElicitSlotDirective(currentSlot.name)
-              .getResponse();
-          }
-        } else if (currentSlot.resolutions.resolutionsPerAuthority[0].status.code === 'ER_SUCCESS_NO_MATCH') {
-          if (requiredSlots.indexOf(currentSlot.name) > -1) {
-            prompt = `What ${currentSlot.name} are you looking for`;
-
-            return handlerInput.responseBuilder
-              .speak(prompt)
-              .reprompt(prompt)
-              .addElicitSlotDirective(currentSlot.name)
-              .getResponse();
-          }
-        }
-      }
-    }
-
-    return handlerInput.responseBuilder
-      .addDelegateDirective(currentIntent)
-      .getResponse();
-  },
-};
-
-
-// const InProgressRecommendationIntent = {
-//   canHandle(handlerInput) {
-//     const request = handlerInput.requestEnvelope.request;
-
-//     return request.type === 'IntentRequest'
-//       && request.intent.name === 'RecommendationIntent'
-//       && request.dialogState !== 'COMPLETED';
-//   },
-//   handle(handlerInput) {
-//     const currentIntent = handlerInput.requestEnvelope.request.intent;
-//     let prompt = '';
-
-//     for (const slotName of Object.keys(handlerInput.requestEnvelope.request.intent.slots)) {
-//       const currentSlot = currentIntent.slots[slotName];
-//       if (currentSlot.confirmationStatus !== 'CONFIRMED'
-//                 && currentSlot.resolutions
-//                 && currentSlot.resolutions.resolutionsPerAuthority[0]) {
-//         if (currentSlot.resolutions.resolutionsPerAuthority[0].status.code === 'ER_SUCCESS_MATCH') {
-//           if (currentSlot.resolutions.resolutionsPerAuthority[0].values.length > 1) {
-//             prompt = 'Which would you like';
-//             const size = currentSlot.resolutions.resolutionsPerAuthority[0].values.length;
-
-//             currentSlot.resolutions.resolutionsPerAuthority[0].values
-//               .forEach((element, index) => {
-//                 prompt += ` ${(index === size - 1) ? ' or' : ' '} ${element.value.name}`;
-//               });
-
-//             prompt += '?';
-
-//             return handlerInput.responseBuilder
-//               .speak(prompt)
-//               .reprompt(prompt)
-//               .addElicitSlotDirective(currentSlot.name)
-//               .getResponse();
-//           }
-//         } else if (currentSlot.resolutions.resolutionsPerAuthority[0].status.code === 'ER_SUCCESS_NO_MATCH') {
-//           if (requiredSlots.indexOf(currentSlot.name) > -1) {
-//             prompt = `What ${currentSlot.name} are you looking for`;
-
-//             return handlerInput.responseBuilder
-//               .speak(prompt)
-//               .reprompt(prompt)
-//               .addElicitSlotDirective(currentSlot.name)
-//               .getResponse();
-//           }
-//         }
-//       }
-//     }
-
-//     return handlerInput.responseBuilder
-//       .addDelegateDirective(currentIntent)
-//       .getResponse();
-//   },
-// };
-
-const CompletedRecommendationIntent = {
-  canHandle(handlerInput) {
-    const request = handlerInput.requestEnvelope.request;
-
-    return request.type === 'IntentRequest'
-      && request.intent.name === 'RecommendationIntent'
       && request.dialogState === 'COMPLETED';
   },
   handle(handlerInput) {
-    const filledSlots = handlerInput.requestEnvelope.request.intent.slots;
-
-    const slotValues = getSlotValues(filledSlots);
-
-    const key = `${slotValues.salaryImportance.resolved}-${slotValues.personality.resolved}-${slotValues.bloodTolerance.resolved}-${slotValues.preferredSpecies.resolved}`;
-    const occupation = options[slotsToOptionsMap[key]];
-
-    const speechOutput = `So you want to be ${slotValues.salaryImportance.resolved
-    }. You are an ${slotValues.personality.resolved
-    }, you like ${slotValues.preferredSpecies.resolved
-    }  and you ${slotValues.bloodTolerance.resolved === 'high' ? 'can' : "can't"
-    } tolerate blood ` +
-            `. You should consider being a ${occupation.name}`;
-
     return handlerInput.responseBuilder
-      .speak(speechOutput)
+      .speak("Ergebnis wird berechnet")
       .getResponse();
   },
 };
@@ -269,56 +192,6 @@ const requiredSlots = [
   'salaryImportance',
 ];
 
-const slotsToOptionsMap = {
-  'unimportant-introvert-low-animals': 20,
-  'unimportant-introvert-low-people': 8,
-  'unimportant-introvert-high-animals': 1,
-  'unimportant-introvert-high-people': 4,
-  'unimportant-extrovert-low-animals': 10,
-  'unimportant-extrovert-low-people': 3,
-  'unimportant-extrovert-high-animals': 11,
-  'unimportant-extrovert-high-people': 13,
-  'somewhat-introvert-low-animals': 20,
-  'somewhat-introvert-low-people': 6,
-  'somewhat-introvert-high-animals': 19,
-  'somewhat-introvert-high-people': 14,
-  'somewhat-extrovert-low-animals': 2,
-  'somewhat-extrovert-low-people': 12,
-  'somewhat-extrovert-high-animals': 17,
-  'somewhat-extrovert-high-people': 16,
-  'very-introvert-low-animals': 9,
-  'very-introvert-low-people': 15,
-  'very-introvert-high-animals': 17,
-  'very-introvert-high-people': 7,
-  'very-extrovert-low-animals': 17,
-  'very-extrovert-low-people': 0,
-  'very-extrovert-high-animals': 1,
-  'very-extrovert-high-people': 5,
-};
-
-const options = [
-  { name: 'Actor', description: '' },
-  { name: 'Animal Control Worker', description: '' },
-  { name: 'Animal Shelter Manager', description: '' },
-  { name: 'Artist', description: '' },
-  { name: 'Court Reporter', description: '' },
-  { name: 'Doctor', description: '' },
-  { name: 'Geoscientist', description: '' },
-  { name: 'Investment Banker', description: '' },
-  { name: 'Lighthouse Keeper', description: '' },
-  { name: 'Marine Ecologist', description: '' },
-  { name: 'Park Naturalist', description: '' },
-  { name: 'Pet Groomer', description: '' },
-  { name: 'Physical Therapist', description: '' },
-  { name: 'Security Guard', description: '' },
-  { name: 'Social Media Engineer', description: '' },
-  { name: 'Software Engineer', description: '' },
-  { name: 'Teacher', description: '' },
-  { name: 'Veterinary', description: '' },
-  { name: 'Veterinary Dentist', description: '' },
-  { name: 'Zookeeper', description: '' },
-  { name: 'Zoologist', description: '' },
-];
 
 /* HELPER FUNCTIONS */
 
@@ -367,9 +240,10 @@ function getSlotValues(filledSlots) {
 exports.handler = skillBuilder
   .addRequestHandlers(
     LaunchRequestHandler,
-    // HabeIchCoronaIntent,
-    // InProgressRecommendationIntent,
-    // CompletedRecommendationIntent,
+    StartedInProgressHabeIchCoronaHandler,
+    HabeIchCoronaHandlerDirektKontaktHandler,
+    HabeIchCoronaHandlerDritteKontaktHandler,
+    CompletedHabeIchCoronaIntent,
     HelpHandler,
     ExitHandler,
     FallbackHandler,

@@ -26,19 +26,32 @@
               "name": "fieberOderHusten",
               "type": "bestaetigung",
               "samples": [
-                "{besteatigung}"
+                "{bestaetigung}"
               ]
             },
             {
               "name": "kontakt",
-              "type": "bestaetigung"
+              "type": "bestaetigung",
+              "samples": [
+                "{bestaetigung}"
+              ]
             },
             {
               "name": "direkt",
-              "type": "bestaetigung"
+              "type": "bestaetigung",
+              "samples": [
+                "{bestaetigung}"
+              ]
             },
             {
               "name": "dritte",
+              "type": "bestaetigung",
+              "samples": [
+                "{bestaetigung}"
+              ]
+            },
+            {
+              "name": "bestaetigung",
               "type": "bestaetigung"
             }
           ],
@@ -94,7 +107,7 @@
             {
               "name": "fieberOderHusten",
               "type": "bestaetigung",
-              "confirmationRequired": true,
+              "confirmationRequired": false,
               "elicitationRequired": true,
               "prompts": {
                 "elicitation": "Elicit.Intent-HabeIchCoronaIntent.IntentSlot-fieberOderHusten"
@@ -128,7 +141,7 @@
               }
             },
             {
-              "name": "besteatigung",
+              "name": "bestaetigung",
               "type": "bestaetigung",
               "confirmationRequired": false,
               "elicitationRequired": false,
