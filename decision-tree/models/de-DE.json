@@ -24,7 +24,7 @@
           "name": "InfektionsdatenIntent",
           "slots": [],
           "samples": [
-            "wie viele sind infiziert",
+            "wie viele sind in DE infiziert",
           ]
         },
 		

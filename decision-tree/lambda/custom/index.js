@@ -66,11 +66,21 @@ const InfektionsdatenHandler = {
   },
   async handle(handlerInput) {
     let outputSpeech = 'This is the default message.';
+	
+	
+	var today = new Date();
+	var dd = String(today.getDate()).padStart(2, '0');
+	var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+	var yyyy = today.getFullYear();
 
-    await getRemoteData('https://services1.arcgis.com/0MSEUqKaxRlEPj5g/ArcGIS/rest/services/ncov_cases/FeatureServer/2?f=pjson')
+	today = yyyy + '-' + mm + '-' + dd;
+	
+	var link = `https://covid-api.com/api/reports?date=${today}&q=Germany`;
+
+    await getRemoteData(link)
       .then((response) => {
         const data = JSON.parse(response);
-        outputSpeech = `In sind ${data.confirmed} Menschen als infiziert gemeldet worden.`;
+        outputSpeech = `In sind ${data.confirmed} Menschen in Deutschland als infiziert gemeldet worden.`;
 
       })
       .catch((err) => {
