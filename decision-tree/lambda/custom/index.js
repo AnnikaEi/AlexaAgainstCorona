@@ -314,6 +314,7 @@ exports.handler = skillBuilder
     HabeIchCoronaHandlerNaheHandler,
     HabeIchCoronaHandlerHohesRisikoHandler,
     CompletedHabeIchCoronaIntent,
+	InfektionsdatenHandler
     HelpHandler,
     ExitHandler,
     FallbackHandler,
