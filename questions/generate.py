@@ -65,7 +65,8 @@ def add_intents(base_model, questions: List[Question]):
     for q in questions:
         name = to_intent_name(q.frage)
         samples = q.alternativen
-        base_model["interactionModel"]["languageModel"]["intents"].append({"name": name, "samples": samples})
+        if samples:
+            base_model["interactionModel"]["languageModel"]["intents"].append({"name": name, "samples": samples})
 
 
 def write_intents(model):
