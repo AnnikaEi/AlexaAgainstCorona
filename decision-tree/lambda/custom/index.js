@@ -340,11 +340,83 @@ const ErrorHandler = {
   },
 };
 
+
+/**
+ * Array containing facts.
+ */
+var FACTS = [
+"Du könntest stricken lernen und dir ein neues paar Socken anfertigen.",
+"Du könntest mal wieder die Wohnung putzen.",
+"Du könntest unter deinem Bett und Sofa sauber machen.",
+"Sortiere deinen Kleiderschrank aus.",
+"Schreibe einen Brief und schicke ihn an jemanden den du gerne hast.",
+"Du könntest die Fenster putzen.",
+"Du könntest Gemüsepflanzen auf der Fensterbank ansetzen.",
+"Du könntest ein neues Rezept ausprobieren.",
+"Du könntest 10 Minuten Sport machen.",
+"Du könntest lernen zu meditieren.",
+"Du könntest mal wieder auf deinem Instrument üben.",
+"Du könntest dich über die richtige Lagerung von Obst und Gemüse informieren.",
+"Du könntest alte Fotos anschauen und eventuell sortieren.",
+"Du könntest deine Krimskrams Schublade aufräumen.",
+"Du könntest jemanden anrufen mit dem du schon lange nicht mehr gesprochen hast.",
+"Du könntest alle deine Grundschulkameraden auf Facebook suchen.",
+"Du könntest eine neue Sprache lernen oder eine deine Kentnisse vertiefen.",
+"Du könntest ausrechnen wie viele Tage du schon lebst.",
+"Du könntest dich informieren wie du deinen Mitmenschen helfen kannst.",
+"Du könntest ein Tagebuch über die Corona-Zeit führen.",
+"Du könntest ein Hörbuch anhören.",
+"Du könntest ein Kapitel in einem Buch lesen.",
+"Du könntest dir eine To-Do Liste für die nächsten Tage schreiben.",
+"Du könntest dir einen Essensplan für die nächste Woche erstellen.",
+"Du könntest etwas malen.",
+"Du könntest lernen einen Handstand zu machen.",
+"Du könntest einen Brief an dein zukünfitges Ich schreiben.",
+"Du könntest den Müll raus bringen.",
+"Du könntest den Briefkasten leeren, falls du das heute noch nicht gemacht hast.",
+"Du könntest dir überlegen wo du als nächstes in den Urlaub hin möchtest.",
+"Du könntest dich informieren wo man Blutspenden kann.",
+"Du könntest ein Wort in möglichst viele Sprachen übersetzen.",
+"Du könntest versuchen einen Origami Schwan zu falten.",
+"Du könntest dich informieren wie man bedürftigen helfen kann.",
+"Du könntest jonglieren lernen.",
+"Du könntest alte EMails löschen.",
+"Du könntest ein Sodoku lösen.",
+"Du könntest dir eine Playlist mit deinen Lieblingsliedern zusammenstellen.",
+"Du könntest eine virtuelle Tour durchs Museum machen.",
+"Du könntest einen Papierflieger basteln."
+
+];
+
+exports.handler = function(event, context, callback) {
+    var alexa = Alexa.handler(event, context);
+    alexa.APP_ID = APP_ID;
+    alexa.registerHandlers(FactHandlers);
+    alexa.execute();
+};
+
+var FactHandlers = {
+    'LaunchRequest': function () {
+        this.emit('GetFact');
+    },
+    'GetNewFactIntent': function () {
+        this.emit('GetFact');
+    },
+    'GetFact': function () {
+        // Get a random fact from the facts list
+        var factIndex = Math.floor(Math.random() * FACTS.length);
+        var randomFact = FACTS[factIndex];
+
+        // Create speech output
+        var speechOutput = "Here's your fact: " + randomFact;
+
+        this.emit(':tellWithCard', speechOutput, SKILL_NAME, randomFact)
+
 /* CONSTANTS */
 
 const skillBuilder = Alexa.SkillBuilders.custom();
 const SKILL_NAME = 'Decision Tree';
-const FALLBACK_MESSAGE = `The ${SKILL_NAME} skill can\'t help you with that.  It can recommend the best job for you. Do you want to start your career or be a couch potato?`;
+const FALLBACK_MESSAGE = ` ${SKILL_NAME} kann dir das leider nicht beantworten.`;
 const FALLBACK_REPROMPT = 'What can I help you with?';
 
 const requiredSlots = [
