@@ -19,6 +19,15 @@
           "name": "AMAZON.FallbackIntent",
           "samples": []
         },
+		
+		{
+          "name": "InfektionsdatenIntent",
+          "slots": [],
+          "samples": [
+            "wie viele sind in DE infiziert",
+          ]
+        },
+		
         {
           "name": "HabeIchCoronaIntent",
           "slots": [

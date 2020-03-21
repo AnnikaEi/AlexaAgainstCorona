@@ -58,6 +58,43 @@ const FallbackHandler = {
   },
 };
 
+const InfektionsdatenHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === 'LaunchRequest'
+      || (handlerInput.requestEnvelope.request.type === 'IntentRequest'
+      && handlerInput.requestEnvelope.request.intent.name === 'InfektionsdatenIntent');
+  },
+  async handle(handlerInput) {
+    let outputSpeech = 'This is the default message.';
+	
+	
+	var today = new Date();
+	var dd = String(today.getDate()).padStart(2, '0');
+	var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+	var yyyy = today.getFullYear();
+
+	today = yyyy + '-' + mm + '-' + dd;
+	
+	var link = `https://covid-api.com/api/reports?date=${today}&q=Germany`;
+
+    await getRemoteData(link)
+      .then((response) => {
+        const data = JSON.parse(response);
+        outputSpeech = `In sind ${data.confirmed} Menschen in Deutschland als infiziert gemeldet worden.`;
+
+      })
+      .catch((err) => {
+        //set an optional error message here
+        //outputSpeech = err.message;
+      });
+
+    return handlerInput.responseBuilder
+      .speak(outputSpeech)
+      .getResponse();
+
+  },
+};
+
 
 const StartedInProgressHabeIchCoronaHandler = {
   canHandle(handlerInput) {
