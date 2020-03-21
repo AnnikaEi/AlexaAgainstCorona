@@ -1,0 +1,180 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "was ist corona",
+      "intents": [
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.FallbackIntent",
+          "samples": []
+        },
+        {
+          "name": "HabeIchCoronaIntent",
+          "slots": [
+            {
+              "name": "fieberOderHusten",
+              "type": "bestaetigung",
+              "samples": [
+                "{besteatigung}"
+              ]
+            },
+            {
+              "name": "kontakt",
+              "type": "bestaetigung"
+            },
+            {
+              "name": "direkt",
+              "type": "bestaetigung"
+            },
+            {
+              "name": "dritte",
+              "type": "bestaetigung"
+            }
+          ],
+          "samples": [
+            "habe ich corona",
+            "bin ich krank",
+            "bin ich infiziert"
+          ]
+        },
+        {
+          "name": "AMAZON.NavigateHomeIntent",
+          "samples": []
+        }
+      ],
+      "types": [
+        {
+          "name": "bestaetigung",
+          "values": [
+            {
+              "name": {
+                "value": "ja",
+                "synonyms": [
+                  "jup",
+                  "positiv",
+                  "hab ich",
+                  "hatte ich",
+                  "kann sein"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "nein",
+                "synonyms": [
+                  "ne",
+                  "eher nicht",
+                  "habe ich nicht",
+                  "negativ"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "dialog": {
+      "intents": [
+        {
+          "name": "HabeIchCoronaIntent",
+          "confirmationRequired": false,
+          "prompts": {},
+          "slots": [
+            {
+              "name": "fieberOderHusten",
+              "type": "bestaetigung",
+              "confirmationRequired": true,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.Intent-HabeIchCoronaIntent.IntentSlot-fieberOderHusten"
+              }
+            },
+            {
+              "name": "kontakt",
+              "type": "bestaetigung",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.Intent-HabeIchCoronaIntent.IntentSlot-kontakt"
+              }
+            },
+            {
+              "name": "direkt",
+              "type": "bestaetigung",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.Intent-HabeIchCoronaIntent.IntentSlot-direkt"
+              }
+            },
+            {
+              "name": "dritte",
+              "type": "bestaetigung",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.Intent-HabeIchCoronaIntent.IntentSlot-dritte"
+              }
+            },
+            {
+              "name": "besteatigung",
+              "type": "bestaetigung",
+              "confirmationRequired": false,
+              "elicitationRequired": false,
+              "prompts": {}
+            }
+          ]
+        }
+      ]
+    },
+    "prompts": [
+      {
+        "id": "Elicit.Intent-HabeIchCoronaIntent.IntentSlot-fieberOderHusten",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Haben sie fieber oder husten?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Intent-HabeIchCoronaIntent.IntentSlot-kontakt",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Kennen sie jemanden, der nachweislich COVID-19 hat oder hatte?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Intent-HabeIchCoronaIntent.IntentSlot-direkt",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Direkt kontakt?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Intent-HabeIchCoronaIntent.IntentSlot-dritte",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Direkt kontakt?"
+          }
+        ]
+      }
+    ]
+  }
+}

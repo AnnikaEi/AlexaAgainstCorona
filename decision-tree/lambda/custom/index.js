@@ -35,8 +35,8 @@ const LaunchRequestHandler = {
   },
   handle(handlerInput) {
     return handlerInput.responseBuilder
-      .speak('Welcome to Decision Tree. I will recommend the best job for you. Do you want to start your career or be a couch potato?')
-      .reprompt('Do you want a career or to be a couch potato?')
+      .speak('Hallo! Du kannst mich alles zu Corona fragen.')
+      .reprompt('Stell mir eine Frage!')
       .getResponse();
   },
 };
@@ -58,26 +58,13 @@ const FallbackHandler = {
   },
 };
 
-const CouchPotatoIntent = {
+
+const InProgressHabeIchCoronaIntent = {
   canHandle(handlerInput) {
     const request = handlerInput.requestEnvelope.request;
 
     return request.type === 'IntentRequest'
-      && request.intent.name === 'CouchPotatoIntent';
-  },
-  handle(handlerInput) {
-    return handlerInput.responseBuilder
-      .speak('You don\'t want to start your career? Have fun wasting away on the couch.')
-      .getResponse();
-  },
-};
-
-const InProgressRecommendationIntent = {
-  canHandle(handlerInput) {
-    const request = handlerInput.requestEnvelope.request;
-
-    return request.type === 'IntentRequest'
-      && request.intent.name === 'RecommendationIntent'
+      && request.intent.name === 'HabeIchCoronaIntent'
       && request.dialogState !== 'COMPLETED';
   },
   handle(handlerInput) {
@@ -126,6 +113,62 @@ const InProgressRecommendationIntent = {
       .getResponse();
   },
 };
+
+
+// const InProgressRecommendationIntent = {
+//   canHandle(handlerInput) {
+//     const request = handlerInput.requestEnvelope.request;
+
+//     return request.type === 'IntentRequest'
+//       && request.intent.name === 'RecommendationIntent'
+//       && request.dialogState !== 'COMPLETED';
+//   },
+//   handle(handlerInput) {
+//     const currentIntent = handlerInput.requestEnvelope.request.intent;
+//     let prompt = '';
+
+//     for (const slotName of Object.keys(handlerInput.requestEnvelope.request.intent.slots)) {
+//       const currentSlot = currentIntent.slots[slotName];
+//       if (currentSlot.confirmationStatus !== 'CONFIRMED'
+//                 && currentSlot.resolutions
+//                 && currentSlot.resolutions.resolutionsPerAuthority[0]) {
+//         if (currentSlot.resolutions.resolutionsPerAuthority[0].status.code === 'ER_SUCCESS_MATCH') {
+//           if (currentSlot.resolutions.resolutionsPerAuthority[0].values.length > 1) {
+//             prompt = 'Which would you like';
+//             const size = currentSlot.resolutions.resolutionsPerAuthority[0].values.length;
+
+//             currentSlot.resolutions.resolutionsPerAuthority[0].values
+//               .forEach((element, index) => {
+//                 prompt += ` ${(index === size - 1) ? ' or' : ' '} ${element.value.name}`;
+//               });
+
+//             prompt += '?';
+
+//             return handlerInput.responseBuilder
+//               .speak(prompt)
+//               .reprompt(prompt)
+//               .addElicitSlotDirective(currentSlot.name)
+//               .getResponse();
+//           }
+//         } else if (currentSlot.resolutions.resolutionsPerAuthority[0].status.code === 'ER_SUCCESS_NO_MATCH') {
+//           if (requiredSlots.indexOf(currentSlot.name) > -1) {
+//             prompt = `What ${currentSlot.name} are you looking for`;
+
+//             return handlerInput.responseBuilder
+//               .speak(prompt)
+//               .reprompt(prompt)
+//               .addElicitSlotDirective(currentSlot.name)
+//               .getResponse();
+//           }
+//         }
+//       }
+//     }
+
+//     return handlerInput.responseBuilder
+//       .addDelegateDirective(currentIntent)
+//       .getResponse();
+//   },
+// };
 
 const CompletedRecommendationIntent = {
   canHandle(handlerInput) {
@@ -324,9 +367,9 @@ function getSlotValues(filledSlots) {
 exports.handler = skillBuilder
   .addRequestHandlers(
     LaunchRequestHandler,
-    CouchPotatoIntent,
-    InProgressRecommendationIntent,
-    CompletedRecommendationIntent,
+    // HabeIchCoronaIntent,
+    // InProgressRecommendationIntent,
+    // CompletedRecommendationIntent,
     HelpHandler,
     ExitHandler,
     FallbackHandler,
