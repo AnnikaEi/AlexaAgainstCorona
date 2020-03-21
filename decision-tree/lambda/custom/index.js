@@ -122,8 +122,8 @@ const HabeIchCoronaHandlerDirektKontaktHandler = {
   },
   handle(handlerInput) {
     return handlerInput.responseBuilder
-      .speak('Haben sie sich vor den ersten symptomen in ihrer nähe befunden?')
-      .reprompt('Haben sie sich vor den ersten symptomen in ihrer nähe befunden?')
+      .speak('Hast du dich in der Nähe der infizierten Person aufgehalten, während diese Krank war oder maximal zwei Tage bevor die ersten Symptome aufgetreten sind?')
+      .reprompt('Hast du dich in der Nähe der infizierten Person aufgehalten, während diese Krank war oder maximal zwei Tage bevor die ersten Symptome aufgetreten sind?')
       .addElicitSlotDirective('direkt')
       .getResponse();
   }
@@ -139,8 +139,8 @@ const HabeIchCoronaHandlerNaheHandler = {
   },
   handle(handlerInput) {
     return handlerInput.responseBuilder
-      .speak('Direkter kontakt?')
-      .reprompt('Direkter kontakt')
+      .speak('Hattest du länger als 15 Minuten Kontakt mit der infizierten Person? Oder hast du Körperlüssigkeiten der infizierten Person berührt? Oder saßt du in den zwei umliegenden Reihen einer infizierten Person im Flugzeug?')
+      .reprompt('Hattest du länger als 15 Minuten Kontakt mit der infizierten Person? Oder hast du Körperlüssigkeiten der infizierten Person berührt? Oder saßt du in den zwei umliegenden Reihen einer infizierten Person im Flugzeug?')
       .addElicitSlotDirective('nahe')
       .getResponse();
   }
@@ -159,8 +159,8 @@ const HabeIchCoronaHandlerDritteKontaktHandler = {
   },
   handle(handlerInput) {
     return handlerInput.responseBuilder
-      .speak('Eine Person die sie kennen hatte Kontakt?')
-      .reprompt('Eine Person die sie kennen hatte Kontakt?')
+      .speak('Hattest du Kontakt mit einer Person welche wiederum Kontakt mit einer Infizierten Person hatte?')
+      .reprompt('Hattest du Kontakt mit einer Person welche wiederum Kontakt mit einer Infizierten Person hatte?')
       .addElicitSlotDirective('dritte')
       .getResponse();
   }
@@ -176,8 +176,8 @@ const HabeIchCoronaHandlerKontaktFieberHandler = {
   },
   handle(handlerInput) {
     return handlerInput.responseBuilder
-      .speak('Hatte ihre Kontaktperson fieber?')
-      .reprompt('Hatte ihre Kontaktperson fieber?')
+      .speak('Hatte deine Kontaktperson Symptome wie zum Beispiel Fieber?')
+      .reprompt('Hatte deine Kontaktperson Symptome wie zum Beispiel Fieber?')
       .addElicitSlotDirective('kontaktFieber')
       .getResponse();
   }
@@ -193,9 +193,9 @@ const HabeIchCoronaHandlerTestHandler = {
   },
   handle(handlerInput) {
     return handlerInput.responseBuilder
-      .speak('Hatte ihre Kontaktperson fieber?')
-      .reprompt('Hatte ihre Kontaktperson fieber?')
-      .addElicitSlotDirective('kontaktFieber')
+      .speak('Deine Kontaktperson sollte sich beim Gesundheitsamt melden. Warte ab wie das Testergebnis ausfällt.')
+      .reprompt('Deine Kontaktperson sollte sich beim Gesundheitsamt melden. Warte ab wie das Testergebnis ausfällt.')
+      .addElicitSlotDirective('test')
       .getResponse();
   }
 }
@@ -210,9 +210,9 @@ const HabeIchCoronaHandlerKriterienHandler = {
   },
   handle(handlerInput) {
     return handlerInput.responseBuilder
-      .speak('Kriterien?')
-      .reprompt('Kriterien?')
-      .addElicitSlotDirective('kontaktFieber')
+      .speak('Auf dich treffen zwar keine der eben genannten Kriterien zu, aber hast du dich trotzdem mit der infizierten Person in einem Raum aufgehalten?')
+      .reprompt('Auf dich treffen zwar keine der eben genannten Kriterien zu, aber hast du dich trotzdem mit der infizierten Person in einem Raum aufgehalten?')
+      .addElicitSlotDirective('kriterien')
       .getResponse();
   }
 }
@@ -230,7 +230,7 @@ const CompletedHohesRisiko = {
   handle(handlerInput) {
 
     return handlerInput.responseBuilder
-      .speak("Hohes risiko!")
+      .speak("Du hast ein hohes Infektionsrisiko! Melde dich bitte umgehend beim Gesundheitsamt. Sollte dort belegt sein versuche es ein wenig später noch einmal. Solltest du Symptome entwickeln melde dich bei deinem Hausarzt, gehe aber auf keinen Fall einfach so vorbei. Bleibe in der Wohnung und distanziere dich von deinen Mitbewohnern, zum Beispiel in einem schließbaren Zimmer. Wasche dir regelmäßig die Hände und achte auf eine gute Hygiene. Am besten führst du Tagebuch über deine Körpertemperatur und deinen Gesundheitsstatus.")
       .getResponse();
 
   }
@@ -249,7 +249,7 @@ const CompletedMittleresRisiko = {
     const request = handlerInput.requestEnvelope.request;
     request.dialogState = 'COMPLETED';
     return handlerInput.responseBuilder
-      .speak("Mittleres risiko!")
+      .speak("Du hast ein geringes Infektrisiko. Warte ab ob das Gesundheitsamt sich bei dir meldet. Solltest du Symptome wie zum Beispiel Husten oder Fieber entwickeln, melde dich bitte telefonisch beim Gesundheitsamt oder deinem Hausarzt. Bleibe zuhause und lass nach Möglichkeit andere für dich Einkaufen. Wasche dir regelmäßig die Hände und achte auf deine Hygiene.")
       .getResponse();
 
   }
@@ -279,7 +279,7 @@ const CompletedKeinRisiko = {
     request.dialogState = 'COMPLETED';
 
     return handlerInput.responseBuilder
-      .speak("Kein Risiko")
+      .speak("Das Risiko für dich infiziert zu sein ist sehr gering. Solltest du Krankheitssymptome wie zum Beispiel Husten oder Fieber bekommen kannst du dich telefonisch an deinen Hausarzt wenden. Sollte doch eine Kontaktperson infiziert sein oder Symptome entwicklen mache diesen Test am besten noch einmal. Wasche dir regelmäßig die Hände und bleibe zuhause.")
       .getResponse();
   },
 };
@@ -340,11 +340,83 @@ const ErrorHandler = {
   },
 };
 
+
+/**
+ * Array containing facts.
+ */
+var FACTS = [
+"Du könntest stricken lernen und dir ein neues paar Socken anfertigen.",
+"Du könntest mal wieder die Wohnung putzen.",
+"Du könntest unter deinem Bett und Sofa sauber machen.",
+"Sortiere deinen Kleiderschrank aus.",
+"Schreibe einen Brief und schicke ihn an jemanden den du gerne hast.",
+"Du könntest die Fenster putzen.",
+"Du könntest Gemüsepflanzen auf der Fensterbank ansetzen.",
+"Du könntest ein neues Rezept ausprobieren.",
+"Du könntest 10 Minuten Sport machen.",
+"Du könntest lernen zu meditieren.",
+"Du könntest mal wieder auf deinem Instrument üben.",
+"Du könntest dich über die richtige Lagerung von Obst und Gemüse informieren.",
+"Du könntest alte Fotos anschauen und eventuell sortieren.",
+"Du könntest deine Krimskrams Schublade aufräumen.",
+"Du könntest jemanden anrufen mit dem du schon lange nicht mehr gesprochen hast.",
+"Du könntest alle deine Grundschulkameraden auf Facebook suchen.",
+"Du könntest eine neue Sprache lernen oder eine deine Kentnisse vertiefen.",
+"Du könntest ausrechnen wie viele Tage du schon lebst.",
+"Du könntest dich informieren wie du deinen Mitmenschen helfen kannst.",
+"Du könntest ein Tagebuch über die Corona-Zeit führen.",
+"Du könntest ein Hörbuch anhören.",
+"Du könntest ein Kapitel in einem Buch lesen.",
+"Du könntest dir eine To-Do Liste für die nächsten Tage schreiben.",
+"Du könntest dir einen Essensplan für die nächste Woche erstellen.",
+"Du könntest etwas malen.",
+"Du könntest lernen einen Handstand zu machen.",
+"Du könntest einen Brief an dein zukünfitges Ich schreiben.",
+"Du könntest den Müll raus bringen.",
+"Du könntest den Briefkasten leeren, falls du das heute noch nicht gemacht hast.",
+"Du könntest dir überlegen wo du als nächstes in den Urlaub hin möchtest.",
+"Du könntest dich informieren wo man Blutspenden kann.",
+"Du könntest ein Wort in möglichst viele Sprachen übersetzen.",
+"Du könntest versuchen einen Origami Schwan zu falten.",
+"Du könntest dich informieren wie man bedürftigen helfen kann.",
+"Du könntest jonglieren lernen.",
+"Du könntest alte EMails löschen.",
+"Du könntest ein Sodoku lösen.",
+"Du könntest dir eine Playlist mit deinen Lieblingsliedern zusammenstellen.",
+"Du könntest eine virtuelle Tour durchs Museum machen.",
+"Du könntest einen Papierflieger basteln."
+
+];
+
+exports.handler = function(event, context, callback) {
+    var alexa = Alexa.handler(event, context);
+    alexa.APP_ID = APP_ID;
+    alexa.registerHandlers(FactHandlers);
+    alexa.execute();
+};
+
+var FactHandlers = {
+    'LaunchRequest': function () {
+        this.emit('GetFact');
+    },
+    'GetNewFactIntent': function () {
+        this.emit('GetFact');
+    },
+    'GetFact': function () {
+        // Get a random fact from the facts list
+        var factIndex = Math.floor(Math.random() * FACTS.length);
+        var randomFact = FACTS[factIndex];
+
+        // Create speech output
+        var speechOutput = "Here's your fact: " + randomFact;
+
+        this.emit(':tellWithCard', speechOutput, SKILL_NAME, randomFact)
+
 /* CONSTANTS */
 
 const skillBuilder = Alexa.SkillBuilders.custom();
 const SKILL_NAME = 'Decision Tree';
-const FALLBACK_MESSAGE = `The ${SKILL_NAME} skill can\'t help you with that.  It can recommend the best job for you. Do you want to start your career or be a couch potato?`;
+const FALLBACK_MESSAGE = ` ${SKILL_NAME} kann dir das leider nicht beantworten.`;
 const FALLBACK_REPROMPT = 'What can I help you with?';
 
 const requiredSlots = [

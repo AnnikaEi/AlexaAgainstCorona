@@ -25,7 +25,7 @@
           "samples": [
             "wie viele sind in deutschland infiziert",
             "wie viele sind krank",
-            "wie viele"
+            "wie viele "
           ]
         },
         {
@@ -61,27 +61,6 @@
             },
             {
               "name": "nahe",
-              "type": "bestaetigung",
-              "samples": [
-                "{bestaetigung}"
-              ]
-            },
-            {
-              "name": "kontaktFieber",
-              "type": "bestaetigung",
-              "samples": [
-                "{bestaetigung}"
-              ]
-            },
-            {
-              "name": "test",
-              "type": "bestaetigung",
-              "samples": [
-                "{bestaetigung}"
-              ]
-            },
-            {
-              "name": "kriterien",
               "type": "bestaetigung",
               "samples": [
                 "{bestaetigung}"
@@ -181,27 +160,6 @@
               "prompts": {}
             },
             {
-              "name": "kontaktFieber",
-              "type": "bestaetigung",
-              "confirmationRequired": false,
-              "elicitationRequired": false,
-              "prompts": {}
-            },
-            {
-              "name": "test",
-              "type": "bestaetigung",
-              "confirmationRequired": false,
-              "elicitationRequired": false,
-              "prompts": {}
-            },
-            {
-              "name": "kriterien",
-              "type": "bestaetigung",
-              "confirmationRequired": false,
-              "elicitationRequired": false,
-              "prompts": {}
-            },
-            {
               "name": "bestaetigung",
               "type": "bestaetigung",
               "confirmationRequired": false,
@@ -218,7 +176,7 @@
         "variations": [
           {
             "type": "PlainText",
-            "value": "Haben sie fieber oder husten?"
+            "value": "Hast du Fieber oder Husten?"
           }
         ]
       },
@@ -227,7 +185,7 @@
         "variations": [
           {
             "type": "PlainText",
-            "value": "Kennen sie jemanden, der nachweislich COVID-19 hat oder hatte?"
+            "value": "Kennst du jemanden, die oder der nachweislich COVID-19 hat oder hatte?"
           }
         ]
       },
@@ -236,7 +194,7 @@
         "variations": [
           {
             "type": "PlainText",
-            "value": "Direkt kontakt?"
+            "value": "Hast du dich in der Nähe der infizierten Person aufgehalten, während diese Krank war oder maximal zwei Tage bevor die ersten Symptome aufgetreten sind?"
           }
         ]
       },
@@ -245,7 +203,7 @@
         "variations": [
           {
             "type": "PlainText",
-            "value": "Dritte kontakt?"
+            "value": "Hattest du Kontakt mit einer Person welche wiederum Kontakt mit einer Infizierten Person hatte?"
           }
         ]
       },
@@ -254,7 +212,7 @@
         "variations": [
           {
             "type": "PlainText",
-            "value": "Nahen kontakt?"
+            "value": "Hattest du länger als 15 Minuten Kontakt mit der infizierten Person? Oder hast du Körperlüssigkeiten der infizierten Person berührt? Oder saßt du in den zwei umliegenden Reihen einer infizierten Person im Flugzeug?"
           }
         ]
       }
