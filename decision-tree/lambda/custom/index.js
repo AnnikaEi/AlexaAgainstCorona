@@ -62,20 +62,20 @@ const InfektionsdatenHandler = {
   canHandle(handlerInput) {
     return handlerInput.requestEnvelope.request.type === 'LaunchRequest'
       || (handlerInput.requestEnvelope.request.type === 'IntentRequest'
-      && handlerInput.requestEnvelope.request.intent.name === 'InfektionsdatenIntent');
+        && handlerInput.requestEnvelope.request.intent.name === 'InfektionsdatenIntent');
   },
   async handle(handlerInput) {
     let outputSpeech = 'This is the default message.';
-	
-	
-	var today = new Date();
-	var dd = String(today.getDate()).padStart(2, '0');
-	var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-	var yyyy = today.getFullYear();
 
-	today = yyyy + '-' + mm + '-' + dd;
-	
-	var link = `https://covid-api.com/api/reports?date=${today}&q=Germany`;
+
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+
+    today = yyyy + '-' + mm + '-' + dd;
+
+    var link = `https://covid-api.com/api/reports?date=${today}&q=Germany`;
 
     await getRemoteData(link)
       .then((response) => {
@@ -85,7 +85,7 @@ const InfektionsdatenHandler = {
       })
       .catch((err) => {
         //set an optional error message here
-        //outputSpeech = err.message;
+        outputSpeech = err.message;
       });
 
     return handlerInput.responseBuilder
@@ -113,16 +113,19 @@ const HabeIchCoronaHandlerDirektKontaktHandler = {
   canHandle(handlerInput) {
     return handlerInput.requestEnvelope.request.type === "IntentRequest"
       && handlerInput.requestEnvelope.request.intent.name === "HabeIchCoronaIntent"
-      && handlerInput.requestEnvelope.request.intent.slots.kontakt.value
-      && handlerInput.requestEnvelope.request.intent.slots.kontakt.value === 'ja'
-      && !handlerInput.requestEnvelope.request.intent.slots.direkt.value
+      && ((handlerInput.requestEnvelope.request.intent.slots.kontakt.value
+        && handlerInput.requestEnvelope.request.intent.slots.kontakt.value === 'ja'
+        && !handlerInput.requestEnvelope.request.intent.slots.direkt.value) ||
+        (handlerInput.requestEnvelope.request.intent.slots.test.value
+          && handlerInput.requestEnvelope.request.intent.slots.test.value === 'ja'
+          && !handlerInput.requestEnvelope.request.intent.slots.direkt.value))
   },
   handle(handlerInput) {
     return handlerInput.responseBuilder
-    .speak('Haben sie sich vor den ersten symptomen in ihrer nähe befunden?')
-    .reprompt('Haben sie sich vor den ersten symptomen in ihrer nähe befunden?')
-    .addElicitSlotDirective('direkt')
-    .getResponse();
+      .speak('Haben sie sich vor den ersten symptomen in ihrer nähe befunden?')
+      .reprompt('Haben sie sich vor den ersten symptomen in ihrer nähe befunden?')
+      .addElicitSlotDirective('direkt')
+      .getResponse();
   }
 }
 
@@ -136,24 +139,10 @@ const HabeIchCoronaHandlerNaheHandler = {
   },
   handle(handlerInput) {
     return handlerInput.responseBuilder
-    .speak('Direkter kontakt?')
-    .reprompt('Direkter kontakt')
-    .addElicitSlotDirective('nahe')
-    .getResponse();
-  }
-}
-
-const HabeIchCoronaHandlerHohesRisikoHandler = {
-  canHandle(handlerInput) {
-    return handlerInput.requestEnvelope.request.type === "IntentRequest"
-      && handlerInput.requestEnvelope.request.intent.name === "HabeIchCoronaIntent"
-      && handlerInput.requestEnvelope.request.intent.slots.nahe.value
-      && handlerInput.requestEnvelope.request.intent.slots.nahe.value === 'ja'
-  },
-  handle(handlerInput) {
-    return handlerInput.responseBuilder
-    .speak('ALARM!!!')
-    .getResponse();
+      .speak('Direkter kontakt?')
+      .reprompt('Direkter kontakt')
+      .addElicitSlotDirective('nahe')
+      .getResponse();
   }
 }
 
@@ -161,31 +150,136 @@ const HabeIchCoronaHandlerDritteKontaktHandler = {
   canHandle(handlerInput) {
     return handlerInput.requestEnvelope.request.type === "IntentRequest"
       && handlerInput.requestEnvelope.request.intent.name === "HabeIchCoronaIntent"
-      && handlerInput.requestEnvelope.request.intent.slots.kontakt.value
-      && handlerInput.requestEnvelope.request.intent.slots.kontakt.value === 'nein'
-      && !handlerInput.requestEnvelope.request.intent.slots.direkt.value
+      && ((handlerInput.requestEnvelope.request.intent.slots.kontakt.value
+        && handlerInput.requestEnvelope.request.intent.slots.kontakt.value === 'nein'
+        && !handlerInput.requestEnvelope.request.intent.slots.direkt.value)
+        || (handlerInput.requestEnvelope.request.intent.slots.nahe.value
+          && handlerInput.requestEnvelope.request.intent.slots.nahe.value === 'nein'
+          && !handlerInput.requestEnvelope.request.intent.slots.dritte.value))
   },
   handle(handlerInput) {
     return handlerInput.responseBuilder
-    .speak('Eine Person die sie kennen hatte Kontakt?')
-    .reprompt('Eine Person die sie kennen hatte Kontakt?')
-    .addElicitSlotDirective('dritte')
-    .getResponse();
+      .speak('Eine Person die sie kennen hatte Kontakt?')
+      .reprompt('Eine Person die sie kennen hatte Kontakt?')
+      .addElicitSlotDirective('dritte')
+      .getResponse();
   }
 }
 
+const HabeIchCoronaHandlerKontaktFieberHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === "IntentRequest"
+      && handlerInput.requestEnvelope.request.intent.name === "HabeIchCoronaIntent"
+      && handlerInput.requestEnvelope.request.intent.slots.dritte.value
+      && handlerInput.requestEnvelope.request.intent.slots.dritte.value === 'ja'
+      && !handlerInput.requestEnvelope.request.intent.slots.kontaktFieber.value
+  },
+  handle(handlerInput) {
+    return handlerInput.responseBuilder
+      .speak('Hatte ihre Kontaktperson fieber?')
+      .reprompt('Hatte ihre Kontaktperson fieber?')
+      .addElicitSlotDirective('kontaktFieber')
+      .getResponse();
+  }
+}
 
-const CompletedHabeIchCoronaIntent = {
+const HabeIchCoronaHandlerTestHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === "IntentRequest"
+      && handlerInput.requestEnvelope.request.intent.name === "HabeIchCoronaIntent"
+      && handlerInput.requestEnvelope.request.intent.slots.kontaktFieber.value
+      && handlerInput.requestEnvelope.request.intent.slots.kontaktFieber.value === 'ja'
+      && !handlerInput.requestEnvelope.request.intent.slots.test.value
+  },
+  handle(handlerInput) {
+    return handlerInput.responseBuilder
+      .speak('Hatte ihre Kontaktperson fieber?')
+      .reprompt('Hatte ihre Kontaktperson fieber?')
+      .addElicitSlotDirective('kontaktFieber')
+      .getResponse();
+  }
+}
+
+const HabeIchCoronaHandlerKriterienHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === "IntentRequest"
+      && handlerInput.requestEnvelope.request.intent.name === "HabeIchCoronaIntent"
+      && handlerInput.requestEnvelope.request.intent.slots.nahe.value
+      && handlerInput.requestEnvelope.request.intent.slots.nahe.value === 'nein'
+      && !handlerInput.requestEnvelope.request.intent.slots.kriterien.value
+  },
+  handle(handlerInput) {
+    return handlerInput.responseBuilder
+      .speak('Kriterien?')
+      .reprompt('Kriterien?')
+      .addElicitSlotDirective('kontaktFieber')
+      .getResponse();
+  }
+}
+
+const CompletedHohesRisiko = {
+  canHandle(handlerInput) {
+    const request = handlerInput.requestEnvelope.request;
+    request.dialogState = 'COMPLETED';
+
+    return request.type === 'IntentRequest'
+      && request.intent.name === 'HabeIchCoronaIntent'
+      && handlerInput.requestEnvelope.request.intent.slots.nahe.value
+      && handlerInput.requestEnvelope.request.intent.slots.nahe.value === 'ja';
+  },
+  handle(handlerInput) {
+
+    return handlerInput.responseBuilder
+      .speak("Hohes risiko!")
+      .getResponse();
+
+  }
+}
+
+const CompletedMittleresRisiko = {
   canHandle(handlerInput) {
     const request = handlerInput.requestEnvelope.request;
 
     return request.type === 'IntentRequest'
       && request.intent.name === 'HabeIchCoronaIntent'
-      && request.dialogState === 'COMPLETED';
+      && handlerInput.requestEnvelope.request.intent.slots.kriterien.value
+      && handlerInput.requestEnvelope.request.intent.slots.kriterien.value === 'ja';
   },
   handle(handlerInput) {
+    const request = handlerInput.requestEnvelope.request;
+    request.dialogState = 'COMPLETED';
     return handlerInput.responseBuilder
-      .speak("Ergebnis wird berechnet")
+      .speak("Mittleres risiko!")
+      .getResponse();
+
+  }
+}
+
+
+const CompletedKeinRisiko = {
+  canHandle(handlerInput) {
+    const request = handlerInput.requestEnvelope.request;
+    request.dialogState = 'COMPLETED';
+    var dritte = (handlerInput.requestEnvelope.request.intent.slots.dritte.value &&
+      handlerInput.requestEnvelope.request.intent.slots.dritte.value === 'nein');
+    var kontaktFieber = (handlerInput.requestEnvelope.request.intent.slots.kontaktFieber.value === 'nein'
+      && handlerInput.requestEnvelope.request.intent.slots.kontaktFieber.value === 'nein');
+    var test = (handlerInput.requestEnvelope.request.intent.slots.test.value === 'nein'
+      && handlerInput.requestEnvelope.request.intent.slots.test.value === 'nein');
+    var kriterienNein = (handlerInput.requestEnvelope.request.intent.slots.test.value === 'nein'
+      && handlerInput.requestEnvelope.request.intent.slots.test.value === 'nein');
+    var keinRisiko = (dritte || kontaktFieber || test || kriterienNein || keinRisiko);
+
+    return request.type === 'IntentRequest'
+      && request.intent.name === 'HabeIchCoronaIntent'
+      && keinRisiko;
+  },
+  handle(handlerInput) {
+    const request = handlerInput.requestEnvelope.request;
+    request.dialogState = 'COMPLETED';
+
+    return handlerInput.responseBuilder
+      .speak("Kein Risiko")
       .getResponse();
   },
 };
@@ -310,15 +404,17 @@ exports.handler = skillBuilder
     LaunchRequestHandler,
     StartedInProgressHabeIchCoronaHandler,
     HabeIchCoronaHandlerDirektKontaktHandler,
-    HabeIchCoronaHandlerDritteKontaktHandler,
     HabeIchCoronaHandlerNaheHandler,
-    HabeIchCoronaHandlerHohesRisikoHandler,
-    CompletedHabeIchCoronaIntent,
-	InfektionsdatenHandler
+    CompletedHohesRisiko, CompletedMittleresRisiko, CompletedKeinRisiko,
+    HabeIchCoronaHandlerKontaktFieberHandler,
+    HabeIchCoronaHandlerDritteKontaktHandler,
+    HabeIchCoronaHandlerTestHandler,
+    HabeIchCoronaHandlerKriterienHandler,
+    InfektionsdatenHandler,
     HelpHandler,
     ExitHandler,
     FallbackHandler,
-    SessionEndedRequestHandler,
+    SessionEndedRequestHandler
   )
   .addErrorHandlers(ErrorHandler)
   .lambda();

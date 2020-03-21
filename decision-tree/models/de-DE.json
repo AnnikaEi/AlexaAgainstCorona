@@ -67,6 +67,27 @@
               ]
             },
             {
+              "name": "kontaktFieber",
+              "type": "bestaetigung",
+              "samples": [
+                "{bestaetigung}"
+              ]
+            },
+            {
+              "name": "test",
+              "type": "bestaetigung",
+              "samples": [
+                "{bestaetigung}"
+              ]
+            },
+            {
+              "name": "kriterien",
+              "type": "bestaetigung",
+              "samples": [
+                "{bestaetigung}"
+              ]
+            },
+            {
               "name": "bestaetigung",
               "type": "bestaetigung"
             }
@@ -154,6 +175,27 @@
             },
             {
               "name": "nahe",
+              "type": "bestaetigung",
+              "confirmationRequired": false,
+              "elicitationRequired": false,
+              "prompts": {}
+            },
+            {
+              "name": "kontaktFieber",
+              "type": "bestaetigung",
+              "confirmationRequired": false,
+              "elicitationRequired": false,
+              "prompts": {}
+            },
+            {
+              "name": "test",
+              "type": "bestaetigung",
+              "confirmationRequired": false,
+              "elicitationRequired": false,
+              "prompts": {}
+            },
+            {
+              "name": "kriterien",
               "type": "bestaetigung",
               "confirmationRequired": false,
               "elicitationRequired": false,
