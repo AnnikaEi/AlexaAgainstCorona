@@ -89,6 +89,37 @@ const HabeIchCoronaHandlerDirektKontaktHandler = {
   }
 }
 
+const HabeIchCoronaHandlerNaheHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === "IntentRequest"
+      && handlerInput.requestEnvelope.request.intent.name === "HabeIchCoronaIntent"
+      && handlerInput.requestEnvelope.request.intent.slots.direkt.value
+      && handlerInput.requestEnvelope.request.intent.slots.direkt.value === 'ja'
+      && !handlerInput.requestEnvelope.request.intent.slots.nahe.value
+  },
+  handle(handlerInput) {
+    return handlerInput.responseBuilder
+    .speak('Direkter kontakt?')
+    .reprompt('Direkter kontakt')
+    .addElicitSlotDirective('nahe')
+    .getResponse();
+  }
+}
+
+const HabeIchCoronaHandlerHohesRisikoHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === "IntentRequest"
+      && handlerInput.requestEnvelope.request.intent.name === "HabeIchCoronaIntent"
+      && handlerInput.requestEnvelope.request.intent.slots.nahe.value
+      && handlerInput.requestEnvelope.request.intent.slots.nahe.value === 'ja'
+  },
+  handle(handlerInput) {
+    return handlerInput.responseBuilder
+    .speak('ALARM!!!')
+    .getResponse();
+  }
+}
+
 const HabeIchCoronaHandlerDritteKontaktHandler = {
   canHandle(handlerInput) {
     return handlerInput.requestEnvelope.request.type === "IntentRequest"
@@ -243,6 +274,8 @@ exports.handler = skillBuilder
     StartedInProgressHabeIchCoronaHandler,
     HabeIchCoronaHandlerDirektKontaktHandler,
     HabeIchCoronaHandlerDritteKontaktHandler,
+    HabeIchCoronaHandlerNaheHandler,
+    HabeIchCoronaHandlerHohesRisikoHandler,
     CompletedHabeIchCoronaIntent,
     HelpHandler,
     ExitHandler,

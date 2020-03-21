@@ -51,6 +51,13 @@
               ]
             },
             {
+              "name": "nahe",
+              "type": "bestaetigung",
+              "samples": [
+                "{bestaetigung}"
+              ]
+            },
+            {
               "name": "bestaetigung",
               "type": "bestaetigung"
             }
@@ -141,6 +148,15 @@
               }
             },
             {
+              "name": "nahe",
+              "type": "bestaetigung",
+              "confirmationRequired": false,
+              "elicitationRequired": false,
+              "prompts": {
+                "elicitation": "Elicit.Intent-HabeIchCoronaIntent.IntentSlot-nahe"
+              }
+            },
+            {
               "name": "bestaetigung",
               "type": "bestaetigung",
               "confirmationRequired": false,
@@ -184,7 +200,16 @@
         "variations": [
           {
             "type": "PlainText",
-            "value": "Direkt kontakt?"
+            "value": "Dritte kontakt?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Intent-HabeIchCoronaIntent.IntentSlot-nahe",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Nahen kontakt?"
           }
         ]
       }
