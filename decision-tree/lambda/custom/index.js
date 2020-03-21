@@ -58,6 +58,33 @@ const FallbackHandler = {
   },
 };
 
+const InfektionsdatenHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === 'LaunchRequest'
+      || (handlerInput.requestEnvelope.request.type === 'IntentRequest'
+      && handlerInput.requestEnvelope.request.intent.name === 'InfektionsdatenIntent');
+  },
+  async handle(handlerInput) {
+    let outputSpeech = 'This is the default message.';
+
+    await getRemoteData('https://services1.arcgis.com/0MSEUqKaxRlEPj5g/ArcGIS/rest/services/ncov_cases/FeatureServer/2?f=pjson')
+      .then((response) => {
+        const data = JSON.parse(response);
+        outputSpeech = `In sind ${data.confirmed} Menschen als infiziert gemeldet worden.`;
+
+      })
+      .catch((err) => {
+        //set an optional error message here
+        //outputSpeech = err.message;
+      });
+
+    return handlerInput.responseBuilder
+      .speak(outputSpeech)
+      .getResponse();
+
+  },
+};
+
 
 const StartedInProgressHabeIchCoronaHandler = {
   canHandle(handlerInput) {
