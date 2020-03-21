@@ -19,15 +19,13 @@
           "name": "AMAZON.FallbackIntent",
           "samples": []
         },
-		
-		{
+        {
           "name": "InfektionsdatenIntent",
           "slots": [],
           "samples": [
-            "wie viele sind in DE infiziert",
+            "wie viele sind in DE infiziert"
           ]
         },
-		
         {
           "name": "HabeIchCoronaIntent",
           "slots": [
@@ -142,28 +140,22 @@
               "name": "direkt",
               "type": "bestaetigung",
               "confirmationRequired": false,
-              "elicitationRequired": true,
-              "prompts": {
-                "elicitation": "Elicit.Intent-HabeIchCoronaIntent.IntentSlot-direkt"
-              }
+              "elicitationRequired": false,
+              "prompts": {}
             },
             {
               "name": "dritte",
               "type": "bestaetigung",
               "confirmationRequired": false,
-              "elicitationRequired": true,
-              "prompts": {
-                "elicitation": "Elicit.Intent-HabeIchCoronaIntent.IntentSlot-dritte"
-              }
+              "elicitationRequired": false,
+              "prompts": {}
             },
             {
               "name": "nahe",
               "type": "bestaetigung",
               "confirmationRequired": false,
               "elicitationRequired": false,
-              "prompts": {
-                "elicitation": "Elicit.Intent-HabeIchCoronaIntent.IntentSlot-nahe"
-              }
+              "prompts": {}
             },
             {
               "name": "bestaetigung",
