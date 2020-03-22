@@ -20,35 +20,23 @@
           "samples": []
         },
         {
-          "name": "InfektionsdatenIntent",
-          "slots": [],
-          "samples": [
-            "wie viele sind in deutschland infiziert",
-            "wie viele sind krank",
-            "wie viele "
-          ]
-        },
-		{
           "name": "LangweiligIntent",
           "slots": [],
           "samples": [
-            "was kann ich trotz Quarantäne tun",
-            "Mir ist langweilig",
+            "was kann ich trotz quarantäne tun",
+            "mir ist langweilig",
             "was könnte ich tun",
-			"Was kann ich tun",
-			"Was sollen wir tun"
-			"Uns ist langweilig",
-			"Gib mir eine Aufgabe",
-			"Sag mir was ich tun könnte",
-			"Sag mir eine Aufgabe",
-			"Was kann ich noch machen",
-			"Was darf ich noch"
-			"Was darf ich überhaupt noch tun",
-			"Scheiss Corona"
+            "was sollen wir tun",
+            "uns ist langweilig",
+            "gib mir eine Aufgabe",
+            "sag mir was ich tun könnte",
+            "sag mir eine Aufgabe",
+            "was kann ich noch machen",
+            "was darf ich noch",
+            "was darf ich überhaupt noch tun",
+            "scheiss Corona"
           ]
         },
-		
-		
         {
           "name": "HabeIchCoronaIntent",
           "slots": [
@@ -154,7 +142,7 @@
               "name": "kontakt",
               "type": "bestaetigung",
               "confirmationRequired": false,
-              "elicitationRequired": true,
+              "elicitationRequired": false,
               "prompts": {
                 "elicitation": "Elicit.Intent-HabeIchCoronaIntent.IntentSlot-kontakt"
               }
