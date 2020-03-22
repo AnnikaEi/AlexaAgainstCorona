@@ -270,8 +270,8 @@ const ErrorHandler = {
     console.log(`Error handled: ${error.message}`);
 
     return handlerInput.responseBuilder
-      .speak('Sorry')
-      .reprompt('Sorry, I can\'t understand the command. Please say again.')
+      .speak('Tut mir leid ich konnte deine Eingabe nicht verstehen. Bitte wiederhole sie.')
+      .reprompt('Tut mir leid ich konnte deine Eingabe nicht verstehen. Bitte wiederhole sie.')
       .getResponse();
   },
 };
@@ -341,9 +341,9 @@ const LangweiligHandler = {
 /* CONSTANTS */
 
 const skillBuilder = Alexa.SkillBuilders.custom();
-const SKILL_NAME = 'Decision Tree';
+const SKILL_NAME = 'AlexaAgainstCorona';
 const FALLBACK_MESSAGE = ` ${SKILL_NAME} kann dir das leider nicht beantworten.`;
-const FALLBACK_REPROMPT = 'What can I help you with?';
+const FALLBACK_REPROMPT = 'Wie kann ich dir helfen?';
 
 exports.handler = skillBuilder
   .addRequestHandlers(
