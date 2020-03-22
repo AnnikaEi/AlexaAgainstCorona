@@ -40,8 +40,8 @@ const HelpHandler = {
     },
     handle(handlerInput) {
         return handlerInput.responseBuilder
-            .speak('This is Decision Tree. I can help you find the perfect job. You can say, recommend a job.')
-            .reprompt('Would you like a career or do you want to be a couch potato?')
+            .speak('Stell mir eine Frage.')
+            .reprompt('Stell mir eine Frage.')
             .getResponse();
     },
 };
@@ -81,8 +81,8 @@ const ErrorHandler = {
         console.log(`Error handled: ${error.message}`);
 
         return handlerInput.responseBuilder
-            .speak('Sorry, I can\'t understand the command. Please say again.')
-            .reprompt('Sorry, I can\'t understand the command. Please say again.')
+            .speak('Das habe ich nicht verstanden. Bitte wiederhole deine Frage.')
+            .reprompt('Das habe ich nicht verstanden. Bitte wiederhole deine Frage.')
             .getResponse();
     },
 };
@@ -92,9 +92,9 @@ const ErrorHandler = {
 /* CONSTANTS */
 
 const skillBuilder = Alexa.SkillBuilders.custom();
-const SKILL_NAME = 'Decision Tree';
-const FALLBACK_MESSAGE = `The ${SKILL_NAME} skill can\'t help you with that.  It can recommend the best job for you. Do you want to start your career or be a couch potato?`;
-const FALLBACK_REPROMPT = 'What can I help you with?';
+const SKILL_NAME = 'AlexaAgainsCorona';
+const FALLBACK_MESSAGE = ` ${SKILL_NAME} kann dir das leider nicht beantworten.`;
+const FALLBACK_REPROMPT = 'Wie kann ich dir helfen?';
 
 exports.handler = skillBuilder
     .addRequestHandlers(

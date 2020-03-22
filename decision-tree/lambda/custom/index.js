@@ -1,30 +1,3 @@
-/**
-
-    Copyright 2017-2019 Amazon.com, Inc. and its affiliates. All Rights Reserved.
-    Licensed under the Amazon Software License (the "License").
-    You may not use this file except in compliance with the License.
-    A copy of the License is located at
-      http://aws.amazon.com/asl/
-    or in the "license" file accompanying this file. This file is distributed
-    on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, express
-    or implied. See the License for the specific language governing
-    permissions and limitations under the License.
-
-    This skill demonstrates how to use Dialog Management to delegate slot
-    elicitation to Alexa. For more information on Dialog Directives see the
-    documentation: https://developer.amazon.com/docs/custom-skills/dialog-interface-reference.html
-
-    This skill also uses entity resolution to define synonyms. Combined with
-    dialog management, the skill can ask the user for clarification of a synonym
-    is mapped to two slot values.
- **/
-
-/* eslint-disable  func-names */
-/* eslint-disable  no-restricted-syntax */
-/* eslint-disable  no-loop-func */
-/* eslint-disable  consistent-return */
-/* eslint-disable  no-console */
-
 const Alexa = require('ask-sdk-core');
 
 /* INTENT HANDLERS */
@@ -55,43 +28,6 @@ const FallbackHandler = {
       .speak(FALLBACK_MESSAGE)
       .reprompt(FALLBACK_REPROMPT)
       .getResponse();
-  },
-};
-
-const InfektionsdatenHandler = {
-  canHandle(handlerInput) {
-    return handlerInput.requestEnvelope.request.type === 'LaunchRequest'
-      || (handlerInput.requestEnvelope.request.type === 'IntentRequest'
-        && handlerInput.requestEnvelope.request.intent.name === 'InfektionsdatenIntent');
-  },
-  async handle(handlerInput) {
-    let outputSpeech = 'This is the default message.';
-
-
-    var today = new Date();
-    var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-    var yyyy = today.getFullYear();
-
-    today = yyyy + '-' + mm + '-' + dd;
-
-    var link = `https://covid-api.com/api/reports?date=${today}&q=Germany`;
-
-    await getRemoteData(link)
-      .then((response) => {
-        const data = JSON.parse(response);
-        outputSpeech = `In sind ${data.confirmed} Menschen in Deutschland als infiziert gemeldet worden.`;
-
-      })
-      .catch((err) => {
-        //set an optional error message here
-        outputSpeech = err.message;
-      });
-
-    return handlerInput.responseBuilder
-      .speak(outputSpeech)
-      .getResponse();
-
   },
 };
 
@@ -334,8 +270,8 @@ const ErrorHandler = {
     console.log(`Error handled: ${error.message}`);
 
     return handlerInput.responseBuilder
-      .speak('Sorry, I can\'t understand the command. Please say again.')
-      .reprompt('Sorry, I can\'t understand the command. Please say again.')
+      .speak('Tut mir leid ich konnte deine Eingabe nicht verstehen. Bitte wiederhole sie.')
+      .reprompt('Tut mir leid ich konnte deine Eingabe nicht verstehen. Bitte wiederhole sie.')
       .getResponse();
   },
 };
@@ -345,127 +281,69 @@ const ErrorHandler = {
  * Array containing facts.
  */
 var FACTS = [
-"Du könntest stricken lernen und dir ein neues paar Socken anfertigen.",
-"Du könntest mal wieder die Wohnung putzen.",
-"Du könntest unter deinem Bett und Sofa sauber machen.",
-"Sortiere deinen Kleiderschrank aus.",
-"Schreibe einen Brief und schicke ihn an jemanden den du gerne hast.",
-"Du könntest die Fenster putzen.",
-"Du könntest Gemüsepflanzen auf der Fensterbank ansetzen.",
-"Du könntest ein neues Rezept ausprobieren.",
-"Du könntest 10 Minuten Sport machen.",
-"Du könntest lernen zu meditieren.",
-"Du könntest mal wieder auf deinem Instrument üben.",
-"Du könntest dich über die richtige Lagerung von Obst und Gemüse informieren.",
-"Du könntest alte Fotos anschauen und eventuell sortieren.",
-"Du könntest deine Krimskrams Schublade aufräumen.",
-"Du könntest jemanden anrufen mit dem du schon lange nicht mehr gesprochen hast.",
-"Du könntest alle deine Grundschulkameraden auf Facebook suchen.",
-"Du könntest eine neue Sprache lernen oder eine deine Kentnisse vertiefen.",
-"Du könntest ausrechnen wie viele Tage du schon lebst.",
-"Du könntest dich informieren wie du deinen Mitmenschen helfen kannst.",
-"Du könntest ein Tagebuch über die Corona-Zeit führen.",
-"Du könntest ein Hörbuch anhören.",
-"Du könntest ein Kapitel in einem Buch lesen.",
-"Du könntest dir eine To-Do Liste für die nächsten Tage schreiben.",
-"Du könntest dir einen Essensplan für die nächste Woche erstellen.",
-"Du könntest etwas malen.",
-"Du könntest lernen einen Handstand zu machen.",
-"Du könntest einen Brief an dein zukünfitges Ich schreiben.",
-"Du könntest den Müll raus bringen.",
-"Du könntest den Briefkasten leeren, falls du das heute noch nicht gemacht hast.",
-"Du könntest dir überlegen wo du als nächstes in den Urlaub hin möchtest.",
-"Du könntest dich informieren wo man Blutspenden kann.",
-"Du könntest ein Wort in möglichst viele Sprachen übersetzen.",
-"Du könntest versuchen einen Origami Schwan zu falten.",
-"Du könntest dich informieren wie man bedürftigen helfen kann.",
-"Du könntest jonglieren lernen.",
-"Du könntest alte EMails löschen.",
-"Du könntest ein Sodoku lösen.",
-"Du könntest dir eine Playlist mit deinen Lieblingsliedern zusammenstellen.",
-"Du könntest eine virtuelle Tour durchs Museum machen.",
-"Du könntest einen Papierflieger basteln."
-
+  "Du könntest stricken lernen und dir ein neues paar Socken anfertigen.",
+  "Du könntest mal wieder die Wohnung putzen.",
+  "Du könntest unter deinem Bett und Sofa sauber machen.",
+  "Sortiere deinen Kleiderschrank aus.",
+  "Schreibe einen Brief und schicke ihn an jemanden den du gerne hast.",
+  "Du könntest die Fenster putzen.",
+  "Du könntest Gemüsepflanzen auf der Fensterbank ansetzen.",
+  "Du könntest ein neues Rezept ausprobieren.",
+  "Du könntest 10 Minuten Sport machen.",
+  "Du könntest lernen zu meditieren.",
+  "Du könntest mal wieder auf deinem Instrument üben.",
+  "Du könntest dich über die richtige Lagerung von Obst und Gemüse informieren.",
+  "Du könntest alte Fotos anschauen und eventuell sortieren.",
+  "Du könntest deine Krimskrams Schublade aufräumen.",
+  "Du könntest jemanden anrufen mit dem du schon lange nicht mehr gesprochen hast.",
+  "Du könntest alle deine Grundschulkameraden auf Facebook suchen.",
+  "Du könntest eine neue Sprache lernen oder eine deine Kentnisse vertiefen.",
+  "Du könntest ausrechnen wie viele Tage du schon lebst.",
+  "Du könntest dich informieren wie du deinen Mitmenschen helfen kannst.",
+  "Du könntest ein Tagebuch über die Corona-Zeit führen.",
+  "Du könntest ein Hörbuch anhören.",
+  "Du könntest ein Kapitel in einem Buch lesen.",
+  "Du könntest dir eine To-Do Liste für die nächsten Tage schreiben.",
+  "Du könntest dir einen Essensplan für die nächste Woche erstellen.",
+  "Du könntest etwas malen.",
+  "Du könntest lernen einen Handstand zu machen.",
+  "Du könntest einen Brief an dein zukünfitges Ich schreiben.",
+  "Du könntest den Müll raus bringen.",
+  "Du könntest den Briefkasten leeren, falls du das heute noch nicht gemacht hast.",
+  "Du könntest dir überlegen wo du als nächstes in den Urlaub hin möchtest.",
+  "Du könntest dich informieren wo man Blutspenden kann.",
+  "Du könntest ein Wort in möglichst viele Sprachen übersetzen.",
+  "Du könntest versuchen einen Origami Schwan zu falten.",
+  "Du könntest dich informieren wie man bedürftigen helfen kann.",
+  "Du könntest jonglieren lernen.",
+  "Du könntest alte EMails löschen.",
+  "Du könntest ein Sodoku lösen.",
+  "Du könntest dir eine Playlist mit deinen Lieblingsliedern zusammenstellen.",
+  "Du könntest eine virtuelle Tour durchs Museum machen.",
+  "Du könntest einen Papierflieger basteln."
 ];
 
 const LangweiligHandler = {
   canHandle(handlerInput) {
     return handlerInput.requestEnvelope.request.type === "IntentRequest"
-      && handlerInput.requestEnvelope.request.intent.name === "LangweiligIntent"
-      && handlerInput.requestEnvelope.request.dialogState !== 'COMPLETED';
+      && handlerInput.requestEnvelope.request.intent.name === "LangweiligIntent";
   },
   handle(handlerInput) {
-    return handlerInput.responseBuilder
-      .addDelegateDirective()
-      .getResponse();
-	  
-	var factIndex = Math.floor(Math.random() * FACTS.length);
+    var factIndex = Math.floor(Math.random() * FACTS.length);
     var randomFact = FACTS[factIndex];
 
     return handlerInput.responseBuilder
-      .speak(randomFact);
+      .speak(randomFact)
       .getResponse();
   },
-}      
+}
 
 /* CONSTANTS */
 
 const skillBuilder = Alexa.SkillBuilders.custom();
-const SKILL_NAME = 'Decision Tree';
+const SKILL_NAME = 'AlexaAgainstCorona';
 const FALLBACK_MESSAGE = ` ${SKILL_NAME} kann dir das leider nicht beantworten.`;
-const FALLBACK_REPROMPT = 'What can I help you with?';
-
-const requiredSlots = [
-  'preferredSpecies',
-  'bloodTolerance',
-  'personality',
-  'salaryImportance',
-];
-
-
-/* HELPER FUNCTIONS */
-
-function getSlotValues(filledSlots) {
-  const slotValues = {};
-
-  console.log(`The filled slots: ${JSON.stringify(filledSlots)}`);
-  Object.keys(filledSlots).forEach((item) => {
-    const name = filledSlots[item].name;
-
-    if (filledSlots[item] &&
-      filledSlots[item].resolutions &&
-      filledSlots[item].resolutions.resolutionsPerAuthority[0] &&
-      filledSlots[item].resolutions.resolutionsPerAuthority[0].status &&
-      filledSlots[item].resolutions.resolutionsPerAuthority[0].status.code) {
-      switch (filledSlots[item].resolutions.resolutionsPerAuthority[0].status.code) {
-        case 'ER_SUCCESS_MATCH':
-          slotValues[name] = {
-            synonym: filledSlots[item].value,
-            resolved: filledSlots[item].resolutions.resolutionsPerAuthority[0].values[0].value.name,
-            isValidated: true,
-          };
-          break;
-        case 'ER_SUCCESS_NO_MATCH':
-          slotValues[name] = {
-            synonym: filledSlots[item].value,
-            resolved: filledSlots[item].value,
-            isValidated: false,
-          };
-          break;
-        default:
-          break;
-      }
-    } else {
-      slotValues[name] = {
-        synonym: filledSlots[item].value,
-        resolved: filledSlots[item].value,
-        isValidated: false,
-      };
-    }
-  }, this);
-
-  return slotValues;
-}
+const FALLBACK_REPROMPT = 'Wie kann ich dir helfen?';
 
 exports.handler = skillBuilder
   .addRequestHandlers(
@@ -479,9 +357,9 @@ exports.handler = skillBuilder
     HabeIchCoronaHandlerTestHandler,
     HabeIchCoronaHandlerKriterienHandler,
     InfektionsdatenHandler,
+    LangweiligHandler,
     HelpHandler,
     ExitHandler,
-	LangweiligHandler,
     FallbackHandler,
     SessionEndedRequestHandler
   )
