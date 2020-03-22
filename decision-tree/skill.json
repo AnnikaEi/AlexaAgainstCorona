@@ -3,19 +3,19 @@
     "publishingInformation": {
       "locales": {
         "de-DE": {
-          "summary": "Answer questions to hear a suggested career.",
+          "summary": "Frage Alexa alles zu Corona",
           "examplePhrases": [
-            "Alexa open decision tree",
-            "Alexa ask decision tree to start over",
-            "Alexa tell decision tree restart"
+            "Habe  ich  Corona?",
+            "Können Babys mit Corona infiziert werden?",
+            "Was kann ich trotz Quarantäne tun?"
           ],
           "keywords": [
-            "career",
-            "job",
-            "decision"
+            "virus",
+            "corona",
+            "infection"
           ],
           "name": "AlexaAgainstCorona",
-          "description": "Ask Decision Tree for help choosing your ideal career.\n\nAlexa will provide an ideal career by asking a series of questions and giving you an answer.\n\nTo start, just say \"Alexa, launch Decision Tree\" or \"Alexa, open Decision Tree\" to get started\".\n\nAt any time, you can stop by saying \"Alexa, stop\""
+          "description": "Frag Alexa alles was du zum Coronavirus wissen willst, zum Beispiel ob du infiziert sein könntest oder was ein Virus ist. /n/ Alle Fakten stammen von seriösen Quellen wie der WHO."
         }
       },
       "isAvailableWorldwide": true,

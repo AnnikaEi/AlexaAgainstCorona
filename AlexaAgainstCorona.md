@@ -103,4 +103,5 @@ So könnte beispielsweise:
 * Abgefragt werden ob man zur Risikogruppe gehört
 * Beantworten ob es sich bei einem Thema um FakeNews handelt
 * Verweis auf die nächste Teststation und wie oder wo man sich diesbezüglich melden soll
+* Aktuelle Fallzahlen aus den Landkreisen aufsagen, Alexa kann native nur die von Ländern.
 
