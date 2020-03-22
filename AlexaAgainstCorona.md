@@ -94,6 +94,7 @@ https://docs.google.com/spreadsheets/d/196ea39XOAjfZi9gc0rphDuG4KtJNX6DXKWQXLXy5
 # Was noch zu tun ist
 Leider sind wir noch nicht ganz zufrieden mit unserem Skill.
 Wichtig wäre es, die Fragen und Antworten noch einmal in leichterer Sprache zu formulieren.
+Momentan haben wir leider noch 2 Skills. Es sollte am Ende auf jeden Fall nur noch einen geben, in dem alle Funktionen vereint sind.
 
 # Ideen für die Weiterentwicklung
 Unser Skill könnte noch viel mehr Informationen zum Coronavirus bieten.
