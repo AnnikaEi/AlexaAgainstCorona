@@ -28,6 +28,27 @@
             "wie viele "
           ]
         },
+		{
+          "name": "LangweiligIntent",
+          "slots": [],
+          "samples": [
+            "was kann ich trotz Quarantäne tun",
+            "Mir ist langweilig",
+            "was könnte ich tun",
+			"Was kann ich tun",
+			"Was sollen wir tun"
+			"Uns ist langweilig",
+			"Gib mir eine Aufgabe",
+			"Sag mir was ich tun könnte",
+			"Sag mir eine Aufgabe",
+			"Was kann ich noch machen",
+			"Was darf ich noch"
+			"Was darf ich überhaupt noch tun",
+			"Scheiss Corona"
+          ]
+        },
+		
+		
         {
           "name": "HabeIchCoronaIntent",
           "slots": [

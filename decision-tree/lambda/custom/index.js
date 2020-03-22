@@ -388,29 +388,26 @@ var FACTS = [
 
 ];
 
-exports.handler = function(event, context, callback) {
-    var alexa = Alexa.handler(event, context);
-    alexa.APP_ID = APP_ID;
-    alexa.registerHandlers(FactHandlers);
-    alexa.execute();
-};
+const LangweiligHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === "IntentRequest"
+      && handlerInput.requestEnvelope.request.intent.name === "LangweiligIntent"
+      && handlerInput.requestEnvelope.request.dialogState !== 'COMPLETED';
+  },
+  handle(handlerInput) {
+    return handlerInput.responseBuilder
+      .addDelegateDirective()
+      .getResponse();
+	  
+	var factIndex = Math.floor(Math.random() * FACTS.length);
+    var randomFact = FACTS[factIndex];
 
-var FactHandlers = {
-    'LaunchRequest': function () {
-        this.emit('GetFact');
-    },
-    'GetNewFactIntent': function () {
-        this.emit('GetFact');
-    },
-    'GetFact': function () {
-        // Get a random fact from the facts list
-        var factIndex = Math.floor(Math.random() * FACTS.length);
-        var randomFact = FACTS[factIndex];
-
-        // Create speech output
-        var speechOutput = "Here's your fact: " + randomFact;
-
-        this.emit(':tellWithCard', speechOutput, SKILL_NAME, randomFact)
+    return handlerInput.responseBuilder
+	   var speechOutput = "Here's your fact: " + randomFact;
+      .speak(speechOutput);
+      .getResponse();
+  },
+}      
 
 /* CONSTANTS */
 
@@ -485,6 +482,7 @@ exports.handler = skillBuilder
     InfektionsdatenHandler,
     HelpHandler,
     ExitHandler,
+	LangweiligHandler,
     FallbackHandler,
     SessionEndedRequestHandler
   )
