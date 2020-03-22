@@ -196,19 +196,21 @@ const CompletedKeinRisiko = {
   canHandle(handlerInput) {
     const request = handlerInput.requestEnvelope.request;
     request.dialogState = 'COMPLETED';
-    var dritte = (handlerInput.requestEnvelope.request.intent.slots.dritte.value &&
-      handlerInput.requestEnvelope.request.intent.slots.dritte.value === 'nein');
-    var kontaktFieber = (handlerInput.requestEnvelope.request.intent.slots.kontaktFieber.value === 'nein'
-      && handlerInput.requestEnvelope.request.intent.slots.kontaktFieber.value === 'nein');
-    var test = (handlerInput.requestEnvelope.request.intent.slots.test.value === 'nein'
-      && handlerInput.requestEnvelope.request.intent.slots.test.value === 'nein');
-    var kriterienNein = (handlerInput.requestEnvelope.request.intent.slots.test.value === 'nein'
-      && handlerInput.requestEnvelope.request.intent.slots.test.value === 'nein');
-    var keinRisiko = (dritte || kontaktFieber || test || kriterienNein || keinRisiko);
+    if (request.type === 'IntentRequest'
+      && request.intent.name === 'HabeIchCoronaIntent') {
+      var dritte = (handlerInput.requestEnvelope.request.intent.slots.dritte.value &&
+        handlerInput.requestEnvelope.request.intent.slots.dritte.value === 'nein');
+      var kontaktFieber = (handlerInput.requestEnvelope.request.intent.slots.kontaktFieber.value === 'nein'
+        && handlerInput.requestEnvelope.request.intent.slots.kontaktFieber.value === 'nein');
+      var test = (handlerInput.requestEnvelope.request.intent.slots.test.value === 'nein'
+        && handlerInput.requestEnvelope.request.intent.slots.test.value === 'nein');
+      var kriterienNein = (handlerInput.requestEnvelope.request.intent.slots.test.value === 'nein'
+        && handlerInput.requestEnvelope.request.intent.slots.test.value === 'nein');
+      var keinRisiko = (dritte || kontaktFieber || test || kriterienNein || keinRisiko);
+      return keinRisiko
+    }
 
-    return request.type === 'IntentRequest'
-      && request.intent.name === 'HabeIchCoronaIntent'
-      && keinRisiko;
+    return false;
   },
   handle(handlerInput) {
     const request = handlerInput.requestEnvelope.request;
@@ -356,7 +358,6 @@ exports.handler = skillBuilder
     HabeIchCoronaHandlerDritteKontaktHandler,
     HabeIchCoronaHandlerTestHandler,
     HabeIchCoronaHandlerKriterienHandler,
-    InfektionsdatenHandler,
     LangweiligHandler,
     HelpHandler,
     ExitHandler,
