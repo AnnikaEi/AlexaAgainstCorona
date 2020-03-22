@@ -403,8 +403,7 @@ const LangweiligHandler = {
     var randomFact = FACTS[factIndex];
 
     return handlerInput.responseBuilder
-	   var speechOutput = "Here's your fact: " + randomFact;
-      .speak(speechOutput);
+      .speak(randomFact);
       .getResponse();
   },
 }      
