@@ -3,11 +3,11 @@
         "publishingInformation": {
             "locales": {
                 "de-DE": {
-                    "summary": "Frage Alexa alles zu Corona",
+                    "summary": "Corona Infos",
                     "examplePhrases": [
-                        "Habe  ich  Corona?",
-                        "Können Babys mit Corona infiziert werden?",
-                        "Was kann ich trotz Quarantäne tun?"
+                        "Alexa, Corona Infos",
+                        "Alexa, Können sich Babys mit Corona infizieren?",
+                        "Alexa, Was kann ich trotz Quarantäne tun?"
                     ],
                     "keywords": [
                         "virus",
