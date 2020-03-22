@@ -22,6 +22,7 @@ class Question(object):
     antwort: str
 
 
+# read the csv and parse the lines to Question objects
 def read_csv():
     with open(_INPUT_CSV, mode='r') as csv_file:
         result = []
@@ -41,12 +42,13 @@ def read_csv():
     return result
 
 
-def get_base_model():
+def get_model_template():
     with open(_TEMPLATE_MODEL) as f:
         d = json.load(f)
     return d
 
 
+# amazon hates umlauts in intent names therefore replace everything that is unicode
 def remove_accents(input_str):
     nfkd_form = unicodedata.normalize('NFKD', input_str)
     return u"".join([c for c in nfkd_form if not unicodedata.combining(c)])
@@ -61,12 +63,12 @@ def to_handler_name(name: str):
     return f'{to_intent_name(name)}Handler'
 
 
-def add_intents(base_model, questions: List[Question]):
+def add_intents(model_template, questions: List[Question]):
     for q in questions:
         name = to_intent_name(q.frage)
         samples = q.alternativen
         if samples:
-            base_model["interactionModel"]["languageModel"]["intents"].append({"name": name, "samples": samples})
+            model_template["interactionModel"]["languageModel"]["intents"].append({"name": name, "samples": samples})
 
 
 def write_intents(model):
@@ -74,6 +76,7 @@ def write_intents(model):
         json.dump(model, f, ensure_ascii=False, indent=4)
 
 
+# template for javascript-handler code
 handler = """
 const %NAME% = {
   canHandle(handlerInput) {
@@ -91,7 +94,7 @@ const %NAME% = {
 """
 
 
-def build_lambda(questions: List[Question]):
+def write_lambda_file(questions: List[Question]):
     handlers = []
     for q in questions:
         question_handler = re.sub(r'%NAME%', to_handler_name(q.frage), handler)
@@ -99,12 +102,15 @@ def build_lambda(questions: List[Question]):
         question_handler = re.sub(r'%RESPONSE%', q.antwort, question_handler)
         handlers.append(question_handler)
 
-    handlerNames = [f'{to_handler_name(x.frage)},' for x in questions]
+    handler_names = [f'{to_handler_name(x.frage)},' for x in questions]
 
     with open(_TEMPLATE_LAMBDA, 'r+') as fd:
         contents = fd.readlines()
 
-    contents.insert(102, "".join(handlerNames))
+    # inserting to lines is not reliable if templates change, maybe use templating engine
+    # register handlers
+    contents.insert(102, "".join(handler_names))
+    # add handlers
     contents.insert(91, "".join(handlers))
 
     with open(_LAMBDA, 'w') as f:
@@ -113,7 +119,7 @@ def build_lambda(questions: List[Question]):
 
 if __name__ == '__main__':
     result = read_csv()
-    base_model = get_base_model()
+    base_model = get_model_template()
     add_intents(base_model, result)
     write_intents(base_model)
-    build_lambda(result)
+    write_lambda_file(result)
