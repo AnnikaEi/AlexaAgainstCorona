@@ -1,36 +1,62 @@
 {
-    "manifest": {
-        "publishingInformation": {
-            "locales": {
-                "de-DE": {
-                    "summary": "Corona Infos",
-                    "examplePhrases": [
-                        "Alexa, Corona Infos",
-                        "Alexa, Können sich Babys mit Corona infizieren?",
-                        "Alexa, Was kann ich trotz Quarantäne tun?"
-                    ],
-                    "keywords": [
-                        "virus",
-                        "corona",
-                        "infection"
-                    ],
-                    "name": "AlexaAgainstCorona",
-                    "description": "Frag Alexa alles was du zum Coronavirus wissen willst, zum Beispiel ob du infiziert sein könntest oder was ein Virus ist. /n/ Alle Fakten stammen von seriösen Quellen wie der WHO."
-                }
-            },
-            "isAvailableWorldwide": true,
-            "testingInstructions": "Sample Testing Instructions.",
-            "category": "EDUCATION_AND_REFERENCE",
-            "distributionCountries": []
+  "manifest": {
+    "apis": {
+      "custom": {
+        "endpoint": {
+          "uri": "alexaagainstcorona-question",
+          "sourceDir": "lambda/custom"
         },
-        "apis": {
-            "custom": {
-                "endpoint": {
-                    "sourceDir": "lambda/custom",
-                    "uri": "alexaagainstcorona-question"
-                }
-            }
-        },
-        "manifestVersion": "1.0"
+        "interfaces": []
+      }
+    },
+    "manifestVersion": "1.0",
+    "privacyAndCompliance": {
+      "locales": {
+        "de-DE": {}
+      },
+      "allowsPurchases": false,
+      "usesPersonalInfo": false,
+      "isChildDirected": false,
+      "isExportCompliant": true,
+      "containsAds": false
+    },
+    "publishingInformation": {
+      "locales": {
+        "de-DE": {
+          "name": "AlexaAgainstCorona",
+          "smallIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/80e8/b634f40b7e96492cb6b58ffc046c3e97/APP_ICON?versionId=dLPwnFOOvR8uX10Ad92Czduw81BEUewL&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20200322T195748Z&X-Amz-SignedHeaders=host&X-Amz-Expires=86400&X-Amz-Credential=AKIAWBV6LQ4QFCBG4ID7%2F20200322%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=1d8e1fd0e83484b5ef6c3323937ba08844b58bb6aac920ffa2c17c7f6aeb16a0",
+          "largeIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/3c7b/a43fe734032141978f8e06271eced6ce/APP_ICON_LARGE?versionId=5JV4Ny8NgT3pt_E0IzK_Cx1p0KMSqBkV&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20200322T195748Z&X-Amz-SignedHeaders=host&X-Amz-Expires=86400&X-Amz-Credential=AKIAWBV6LQ4QFCBG4ID7%2F20200322%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=abc7574cc739ee5452445f6abf0f52f6eb55e5e76a85b315c6246e2509257bc3",
+          "summary": "Frage Alexa alles zu Corona",
+          "description": "Alexa beantwortet Fragen rund um Corona.\nWas ist ein Virus, was ist eine Pandemie und warum hilft Händewaschen?\nAlle Informationen sind mit Quellen hinterlegt, z. B. WHO.",
+          "examplePhrases": [
+            "Alexa, was weißt du zu Corona?",
+            "Alexa, können sich Babys mit Corona infiziert werden?",
+            "Alexa, ist Corona schlimmer als die Grippe?"
+          ],
+          "keywords": [
+            "corona",
+            "virus",
+            "stayathome",
+            "quarantäne",
+            "Covid",
+            "wirvsvirus",
+            "hackathon"
+          ]
+        }
+      },
+      "isAvailableWorldwide": true,
+      "testingInstructions": "Alexa",
+      "category": "EDUCATION_AND_REFERENCE",
+      "distributionCountries": [],
+      "automaticDistribution": {
+        "isActive": true,
+        "sourceLocaleForLanguages": [
+          {
+            "language": "de",
+            "sourceLocale": "de-DE"
+          }
+        ]
+      }
     }
+  }
 }
