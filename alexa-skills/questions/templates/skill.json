@@ -1,0 +1,36 @@
+{
+    "manifest": {
+        "publishingInformation": {
+            "locales": {
+                "de-DE": {
+                    "summary": "Frage Alexa alles zu Corona",
+                    "examplePhrases": [
+                        "Habe  ich  Corona?",
+                        "Können Babys mit Corona infiziert werden?",
+                        "Was kann ich trotz Quarantäne tun?"
+                    ],
+                    "keywords": [
+                        "virus",
+                        "corona",
+                        "infection"
+                    ],
+                    "name": "AlexaAgainstCorona",
+                    "description": "Frag Alexa alles was du zum Coronavirus wissen willst, zum Beispiel ob du infiziert sein könntest oder was ein Virus ist. /n/ Alle Fakten stammen von seriösen Quellen wie der WHO."
+                }
+            },
+            "isAvailableWorldwide": true,
+            "testingInstructions": "Sample Testing Instructions.",
+            "category": "EDUCATION_AND_REFERENCE",
+            "distributionCountries": []
+        },
+        "apis": {
+            "custom": {
+                "endpoint": {
+                    "sourceDir": "lambda/custom",
+                    "uri": "alexaagainstcorona-question"
+                }
+            }
+        },
+        "manifestVersion": "1.0"
+    }
+}

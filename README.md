@@ -105,3 +105,9 @@ So könnte beispielsweise:
 * Verweis auf die nächste Teststation und wie oder wo man sich diesbezüglich melden soll
 * Aktuelle Fallzahlen aus den Landkreisen aufsagen, Alexa kann native nur die von Ländern.
 
+# Code
+
+- `alexa-skills/alexa-against-corona` - Hauptskill, der Fragen stellt ob man Corona hat und einem Vorschläge macht was man tun kann.
+- `alexa-skills/questions` - Skill der Fragen beantwortet. Der Skill wird automatisch von einem python-script generiert.
+
+Beide Skills können mit der [ask-cli](https://github.com/alexa-labs/ask-cli) deployt werden.
